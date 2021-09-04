@@ -93,9 +93,11 @@ print("EN UN DIA PARA DOS TRABAJADORES OCUPADOS")
 print(" ")
 print("Este es un ejercicio propuesto por la gente")
 print("de Google en sus entrevistas laborales.")
-print("En teoria demoraria en resolverse en media hora")
-print("Personalmente lo pude resolver en 2 horas y algo.")
+print("En teoria demoraria en resolverse (una aproximacion en pseudocodigo) ")
+print("en media hora. Personalmente lo pude resolver en 2 horas y algo.")
 print("Solo le falta validar la entrada de datos.")
+print("github: https://github.com/martinteppa/calendarioPython")
+print(" ")
 
 horario1 = ast.literal_eval(
     input(
