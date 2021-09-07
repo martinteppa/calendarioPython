@@ -1,5 +1,6 @@
 import math
 import ast
+import requests
 
 
 def cleantime(time):
@@ -88,6 +89,7 @@ def horasdisponibles(tiempo1, lapso1, tiempo2, lapso2):
     return resultado2
 
 
+print("1er PROGRAMA")
 print("ALGORITMO PARA CALCULAR FRANJA HORARIA DISPONIBLE")
 print("EN UN DIA PARA DOS TRABAJADORES OCUPADOS")
 print(" ")
@@ -98,7 +100,6 @@ print("en media hora. Personalmente lo pude resolver en 2 horas y algo.")
 print("Solo le falta validar la entrada de datos.")
 print("github: https://github.com/martinteppa/calendarioPython")
 print(" ")
-
 horario1 = ast.literal_eval(
     input(
         "ingrese el horario de trabajo de la persona 1 en forma de lista, ejemplo: [['9:00', '13:30'], ['14:30', '15:30']]  "
@@ -117,6 +118,28 @@ franja2 = ast.literal_eval(
     input(
         "ingrese la franja horaria laboral de la persona 2 en forma de lista, ejemplo: ['10:00', '18:40']   "
     ))
-
 print("los horarios disponible para visitas entre ambos son: " +
       str(horasdisponibles(horario1, franja1, horario2, franja2)))
+
+print("2do PROGRAMA \n")
+print("Vamos a requestear en la api-rest pokeapi")
+print(" ")
+while True:
+    try:
+        ide = int(input("Ingrese el Id de un pokemon del 1 al 898 \n"))
+        request = 'https://pokeapi.co/api/v2/pokemon/' + str(ide)
+        r = requests.get(request)
+
+        if r.status_code == 200:
+            print("Usted a buscado a: " + r.json()["name"])
+        else:
+            print(
+                "No es posible obtener la request, quizas no exista el pokemon"
+            )
+    except ValueError:
+        print("No ha ingresado un numero entero")
+
+    booleano = input(
+        "Desea buscar otro pokemon? presione cualquier letra, sino enter\n")
+    if not bool(booleano):
+        break

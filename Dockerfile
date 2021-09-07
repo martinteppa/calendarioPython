@@ -2,6 +2,7 @@ FROM python:3.8-slim-buster
 
 ADD calendario.py .
 
-CMD ["calendario.py"]
+RUN python3 -m pip install requests
 
-ENTRYPOINT [ "python3" ]
+CMD ["python3" , "calendario.py"]
+
