@@ -4,11 +4,11 @@
 
 docker pull  martinteppa/calendariopython
 
-docker create -it --name teppa
+docker create -it --name teppa martinteppa/calendariopython
 
-docker start new-container teppa
+docker start teppa
 
-docker exec -it new-container bash
+docker exec -it teppa bash
 
 ## Bash
 
