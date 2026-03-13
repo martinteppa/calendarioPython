@@ -19,74 +19,74 @@ def timed(time):
     return hours + ":" + minutes
 
 
-def tiempodisponible(tiempo1, lapso1):
-    tiempodisponible1 = []
+def available_time(schedule, slot):
+    available = []
 
-    for i in range(0, len(tiempo1) + 1):
+    for i in range(0, len(schedule) + 1):
         if i == 0:
-            if lapso1[0] != tiempo1[i][0]:
-                tiempodisponible1.append([lapso1[0], tiempo1[i][0]])
-        elif i == len(tiempo1):
-            if tiempo1[i - 1][1] != lapso1[1]:
-                tiempodisponible1.append([tiempo1[i - 1][1], lapso1[1]])
+            if slot[0] != schedule[i][0]:
+                available.append([slot[0], schedule[i][0]])
+        elif i == len(schedule):
+            if schedule[i - 1][1] != slot[1]:
+                available.append([schedule[i - 1][1], slot[1]])
         else:
-            tiempodisponible1.append([tiempo1[i - 1][1], tiempo1[i][0]])
-    return tiempodisponible1
+            available.append([schedule[i - 1][1], schedule[i][0]])
+    return available
 
 
-def limpiartiempodisponible(tiempo, limitador):
-    resultado = []
-    for i in range(0, len(tiempo)):
+def clean_available_time(time, limiter):
+    result = []
+    for i in range(0, len(time)):
 
-        if limitador[0] < tiempo[i][0] < limitador[1] or limitador[0] < tiempo[
-                i][1] < limitador[1]:
-            if i == 0 and tiempo[i][0] < limitador[0]:
-                resultado.append([limitador[0], tiempo[i][1]])
+        if limiter[0] < time[i][0] < limiter[1] or limiter[0] < time[
+                i][1] < limiter[1]:
+            if i == 0 and time[i][0] < limiter[0]:
+                result.append([limiter[0], time[i][1]])
 
-            elif i == len(tiempo) - 1 and tiempo[i][1] > limitador[1]:
-                resultado.append([tiempo[i][0], limitador[1]])
+            elif i == len(time) - 1 and time[i][1] > limiter[1]:
+                result.append([time[i][0], limiter[1]])
 
             else:
-                resultado.append([tiempo[i][0], tiempo[i][1]])
+                result.append([time[i][0], time[i][1]])
 
-    return resultado
+    return result
 
 
-def intersecciones(array1, array2):  #[[1,2],[3,4],[5,6]]
-    resultado = []
+def intersections(array1, array2):  #[[1,2],[3,4],[5,6]]
+    result = []
     for index1 in range(0, len(array1)):
         for index2 in range(0, len(array2)):
             if array1[index1][0] <= array2[index2][0] <= array1[index1][1]:
                 if array2[index2][1] < array1[index1][1]:
-                    resultado.append([array2[index2][0], array2[index2][1]])
+                    result.append([array2[index2][0], array2[index2][1]])
                 else:
-                    resultado.append([array2[index2][0], array1[index1][1]])
+                    result.append([array2[index2][0], array1[index1][1]])
             elif array1[index1][0] <= array2[index2][1] <= array1[index1][1]:
                 if array2[index2][0] > array1[index1][0]:
-                    resultado.append([array2[index2][0], array2[index2][1]])
+                    result.append([array2[index2][0], array2[index2][1]])
                 else:
-                    resultado.append([array1[index1][0], array2[index2][1]])
-    return resultado
+                    result.append([array1[index1][0], array2[index2][1]])
+    return result
 
 
-def horasdisponibles(tiempo1, lapso1, tiempo2, lapso2):
-    tiempo1 = [[cleantime(item) for item in time] for time in tiempo1]
-    lapso1 = [cleantime(item) for item in lapso1]
-    tiempo2 = [[cleantime(item) for item in time] for time in tiempo2]
-    lapso2 = [cleantime(item) for item in lapso2]
-    limitador = [max(lapso1[0], lapso2[0]), min(lapso1[1], lapso2[1])]
-    tiempodisponible1 = tiempodisponible(tiempo1, lapso1)
-    tiempodisponible2 = tiempodisponible(tiempo2, lapso2)
-    tiempodisponible1 = limpiartiempodisponible(tiempodisponible1, limitador)
-    tiempodisponible2 = limpiartiempodisponible(tiempodisponible2, limitador)
+def available_hours(schedule1, slot1, schedule2, slot2):
+    schedule1 = [[cleantime(item) for item in time] for time in schedule1]
+    slot1 = [cleantime(item) for item in slot1]
+    schedule2 = [[cleantime(item) for item in time] for time in schedule2]
+    slot2 = [cleantime(item) for item in slot2]
+    limiter = [max(slot1[0], slot2[0]), min(slot1[1], slot2[1])]
+    available1 = available_time(schedule1, slot1)
+    available2 = available_time(schedule2, slot2)
+    available1 = clean_available_time(available1, limiter)
+    available2 = clean_available_time(available2, limiter)
 
-    resultado = intersecciones(tiempodisponible1, tiempodisponible2)
-    resultado2 = []
-    for index in range(0, len(resultado)):
-        resultado2.append(
-            [timed(resultado[index][0]),
-             timed(resultado[index][1])])
-    return resultado2
+    result = intersections(available1, available2)
+    result2 = []
+    for index in range(0, len(result)):
+        result2.append(
+            [timed(result[index][0]),
+             timed(result[index][1])])
+    return result2
 
 
 print("1er PROGRAMA")
@@ -100,34 +100,34 @@ print("en media hora. Personalmente lo pude resolver en 2 horas y algo.")
 print("Solo le falta validar la entrada de datos.")
 print("github: https://github.com/martinteppa/calendarioPython")
 print(" ")
-horario1 = ast.literal_eval(
+schedule1 = ast.literal_eval(
     input(
         "ingrese el horario de trabajo de la persona 1 en forma de lista, ejemplo: [['9:00', '13:30'], ['14:30', '15:30']]  "
     ))
 
-franja1 = ast.literal_eval(
+slot1 = ast.literal_eval(
     input(
         "ingrese la franja horaria laboral de la persona 1 en forma de lista, ejemplo: ['8:00', '17:30']   "
     ))
 
-horario2 = ast.literal_eval(
+schedule2 = ast.literal_eval(
     input(
         "ingrese el horario de trabajo de la persona 2 en forma de lista, ejemplo: [['10:00', '13:30'], ['16:00', '16:30']]  "
     ))
-franja2 = ast.literal_eval(
+slot2 = ast.literal_eval(
     input(
         "ingrese la franja horaria laboral de la persona 2 en forma de lista, ejemplo: ['10:00', '18:40']   "
     ))
 print("los horarios disponible para visitas entre ambos son: " +
-      str(horasdisponibles(horario1, franja1, horario2, franja2)))
+      str(available_hours(schedule1, slot1, schedule2, slot2)))
 
 print("2do PROGRAMA \n")
 print("Vamos a requestear en la api-rest pokeapi")
 print(" ")
 while True:
     try:
-        ide = int(input("Ingrese el Id de un pokemon del 1 al 898 \n"))
-        request = 'https://pokeapi.co/api/v2/pokemon/' + str(ide)
+        pokemon_id = int(input("Ingrese el Id de un pokemon del 1 al 898 \n"))
+        request = 'https://pokeapi.co/api/v2/pokemon/' + str(pokemon_id)
         r = requests.get(request)
 
         if r.status_code == 200:
@@ -139,7 +139,7 @@ while True:
     except ValueError:
         print("No ha ingresado un numero entero")
 
-    booleano = input(
+    keep_searching = input(
         "Desea buscar otro pokemon? presione cualquier letra, sino enter\n")
-    if not bool(booleano):
+    if not bool(keep_searching):
         break
