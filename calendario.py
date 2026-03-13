@@ -89,57 +89,57 @@ def available_hours(schedule1, slot1, schedule2, slot2):
     return result2
 
 
-print("1er PROGRAMA")
-print("ALGORITMO PARA CALCULAR FRANJA HORARIA DISPONIBLE")
-print("EN UN DIA PARA DOS TRABAJADORES OCUPADOS")
+print("PROGRAM 1")
+print("ALGORITHM TO CALCULATE AVAILABLE TIME SLOTS")
+print("IN A DAY FOR TWO BUSY WORKERS")
 print(" ")
-print("Este es un ejercicio propuesto por la gente")
-print("de Google en sus entrevistas laborales.")
-print("En teoria demoraria en resolverse (una aproximacion en pseudocodigo) ")
-print("en media hora. Personalmente lo pude resolver en 2 horas y algo.")
-print("Solo le falta validar la entrada de datos.")
+print("This is an exercise proposed by Google")
+print("in their job interviews.")
+print("In theory it should take about half an hour to solve (a pseudocode approximation).")
+print("Personally it took me about 2 hours.")
+print("Input validation is still missing.")
 print("github: https://github.com/martinteppa/calendarioPython")
 print(" ")
 schedule1 = ast.literal_eval(
     input(
-        "ingrese el horario de trabajo de la persona 1 en forma de lista, ejemplo: [['9:00', '13:30'], ['14:30', '15:30']]  "
+        "Enter the work schedule of person 1 as a list, example: [['9:00', '13:30'], ['14:30', '15:30']]  "
     ))
 
 slot1 = ast.literal_eval(
     input(
-        "ingrese la franja horaria laboral de la persona 1 en forma de lista, ejemplo: ['8:00', '17:30']   "
+        "Enter the working hours slot of person 1 as a list, example: ['8:00', '17:30']   "
     ))
 
 schedule2 = ast.literal_eval(
     input(
-        "ingrese el horario de trabajo de la persona 2 en forma de lista, ejemplo: [['10:00', '13:30'], ['16:00', '16:30']]  "
+        "Enter the work schedule of person 2 as a list, example: [['10:00', '13:30'], ['16:00', '16:30']]  "
     ))
 slot2 = ast.literal_eval(
     input(
-        "ingrese la franja horaria laboral de la persona 2 en forma de lista, ejemplo: ['10:00', '18:40']   "
+        "Enter the working hours slot of person 2 as a list, example: ['10:00', '18:40']   "
     ))
-print("los horarios disponible para visitas entre ambos son: " +
+print("Available meeting times for both: " +
       str(available_hours(schedule1, slot1, schedule2, slot2)))
 
-print("2do PROGRAMA \n")
-print("Vamos a requestear en la api-rest pokeapi")
+print("PROGRAM 2 \n")
+print("Let's make requests to the pokeapi REST API")
 print(" ")
 while True:
     try:
-        pokemon_id = int(input("Ingrese el Id de un pokemon del 1 al 898 \n"))
+        pokemon_id = int(input("Enter a Pokemon ID from 1 to 898 \n"))
         request = 'https://pokeapi.co/api/v2/pokemon/' + str(pokemon_id)
         r = requests.get(request)
 
         if r.status_code == 200:
-            print("Usted a buscado a: " + r.json()["name"])
+            print("You searched for: " + r.json()["name"])
         else:
             print(
-                "No es posible obtener la request, quizas no exista el pokemon"
+                "Unable to get the response, the pokemon may not exist"
             )
     except ValueError:
-        print("No ha ingresado un numero entero")
+        print("You did not enter an integer")
 
     keep_searching = input(
-        "Desea buscar otro pokemon? presione cualquier letra, sino enter\n")
+        "Do you want to search for another pokemon? Press any key, or just Enter to quit\n")
     if not bool(keep_searching):
         break
